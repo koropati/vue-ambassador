@@ -13,7 +13,7 @@
     </section>
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from 'vuex';
 
 export default {
@@ -27,6 +27,12 @@ export default {
 
         title.value = user.value ? '$' + user.value.revenue : 'Welcome';
         description.value = user.value ? 'You have earned this far' : 'Share links to earn money';
+        
+        watch(user, () => {
+            title.value = user.value ? '$' + user.value.revenue : 'Welcome';
+        description.value = user.value ? 'You have earned this far' : 'Share links to earn money';
+        });
+
         return {
             title,
             description,

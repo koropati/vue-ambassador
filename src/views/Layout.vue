@@ -44,13 +44,17 @@ import { useStore } from 'vuex';
 
 export default {
     name: "Layout",
-    components: {Header, Nav},
-    setup(){
+    components: { Header, Nav },
+    setup() {
         const store = useStore();
-        onMounted( async () => {
-            const {data} = await axios.get('user');
+        onMounted(async () => {
+            try {
+                const { data } = await axios.get('user');
+                await store.dispatch('setUser', data);
+            } catch (e) {
+                 await store.dispatch('setUser', null);
+            }
 
-            await store.dispatch('setUser', data);
         });
     }
 }
